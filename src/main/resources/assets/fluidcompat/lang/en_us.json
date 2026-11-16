@@ -1,0 +1,39 @@
+{
+  "fluidcompat.config.title": "Fluid Compat",
+  "fluidcompat.config.opening": "Opening the Fluid Compat settings",
+  "fluidcompat.config.core": "Core",
+  "fluidcompat.config.mod_compat_list": "Mod Compat List",
+  "fluidcompat.config.logging": "Logging",
+
+  "fluidcompat.config.general.enableFiniteFluids": "Finite fluids",
+  "fluidcompat.config.general.enableFiniteFluids.tooltip": "Master switch for the core service. Off: every machine behaves as without Fluid Compat.",
+  "fluidcompat.config.general.backendPreference": "Drain backend",
+  "fluidcompat.config.general.backendPreference.tooltip": "Which system removes fluid from the world. AUTO prefers Flowing Fluids.",
+  "fluidcompat.config.fluids.finiteWater": "Finite water",
+  "fluidcompat.config.fluids.finiteWater.tooltip": "Pumps drain water from the world instead of creating it.",
+  "fluidcompat.config.fluids.finiteLava": "Finite lava",
+  "fluidcompat.config.fluids.finiteLava.tooltip": "Pumps drain lava from the world instead of creating it.",
+  "fluidcompat.config.fluids.finiteTaggedFluids": "Finite tagged fluids",
+  "fluidcompat.config.fluids.finiteTaggedFluids.tooltip": "Also treat every fluid in the tag fluidcompat:managed_fluids as finite.",
+  "fluidcompat.config.pumps.drainPercent": "Drain percent",
+  "fluidcompat.config.pumps.drainPercent.tooltip": "How much of the world's fluid is used per unit pumped. 100 = one for one.",
+  "fluidcompat.config.pumps.minTicksBetweenIntakes": "Minimum ticks between intakes",
+  "fluidcompat.config.pumps.minTicksBetweenIntakes.tooltip": "Extra delay between two drains of the same pump. 0 = none.",
+
+  "fluidcompat.config.general.compatEnabled": "Mod compat",
+  "fluidcompat.config.general.compatEnabled.tooltip": "Master switch for every mod compat module. Off: the supported machines keep their original behaviour.",
+  "fluidcompat.config.energized_power.enabled": "Energized Power",
+  "fluidcompat.config.energized_power.enabled.tooltip": "Fluid Pump, Advanced Fluid Pump and Drain: the tank gets only what the world gave up when they pick up thin water.",
+
+  "fluidcompat.config.energized_power.placeCobblestone": "Energized Power: place cobblestone",
+  "fluidcompat.config.energized_power.placeCobblestone.tooltip": "Off (default): the pump still needs and uses up a cobblestone, but no block is placed, so it drains real water. On: the original behaviour, a cobblestone block replaces the drained cell.",
+
+  "fluidcompat.config.logging.fileEnabled": "Own log file",
+  "fluidcompat.config.logging.fileEnabled.tooltip": "Write logs/fluidcompat/fluidcompat.log.",
+  "fluidcompat.config.logging.verbose": "Verbose log",
+  "fluidcompat.config.logging.verbose.tooltip": "Log one throttled line per machine for every intake.",
+  "fluidcompat.config.logging.debugMode": "Debug mode",
+  "fluidcompat.config.logging.debugMode.tooltip": "Log every intake and extra diagnostics. Can write a lot.",
+  "fluidcompat.config.logging.verboseThrottleMillis": "Verbose throttle (ms)",
+  "fluidcompat.config.logging.verboseThrottleMillis.tooltip": "Minimum time between two verbose lines of the same machine."
+}

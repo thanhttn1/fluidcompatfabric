@@ -1,0 +1,79 @@
+plugins {
+	id 'net.fabricmc.fabric-loom' version "${loom_version}"
+	id 'maven-publish'
+}
+
+base {
+	archivesName = "${mod_id}-fabric-${minecraft_version}"
+}
+
+loom {
+	splitEnvironmentSourceSets()
+
+	mods {
+		"fluidcompat" {
+			sourceSet sourceSets.main
+			sourceSet sourceSets.client
+		}
+	}
+}
+
+dependencies {
+	minecraft "com.mojang:minecraft:${project.minecraft_version}"
+	implementation "net.fabricmc:fabric-loader:${project.loader_version}"
+	implementation "net.fabricmc.fabric-api:fabric-api:${project.fabric_api_version}"
+
+	// Flowing Fluids (required, never bundled): put its Fabric 26.3 jar in libs/, see libs/README.txt.
+	def flowingFluidsJars = fileTree(dir: 'libs', include: 'flowing_fluids*.jar').files.sort()
+	if (flowingFluidsJars.isEmpty()) {
+		logger.warn('WARNING: no flowing_fluids*.jar in libs/, the project cannot compile without it')
+	} else {
+		implementation files(flowingFluidsJars.first())
+	}
+
+	// YetAnotherConfigLib (optional, settings screen only): compile-only, never bundled.
+	clientCompileOnly files(fileTree(dir: 'libs', include: ['YetAnotherConfigLib*.jar', 'yet_another_config_lib*.jar']).files)
+
+	// Mod Menu (optional, adds the config button in the mod list): compile-only, never bundled.
+	clientCompileOnly files(fileTree(dir: 'libs', include: 'modmenu*.jar').files)
+}
+
+processResources {
+	def version = project.version
+	inputs.property "version", version
+
+	filesMatching("fabric.mod.json") {
+		expand "version": version
+	}
+}
+
+tasks.withType(JavaCompile).configureEach {
+	it.options.release = 25
+}
+
+java {
+	withSourcesJar()
+
+	sourceCompatibility = JavaVersion.VERSION_25
+	targetCompatibility = JavaVersion.VERSION_25
+}
+
+jar {
+	def projectName = project.name
+	inputs.property "projectName", projectName
+
+	from("LICENSE.txt") {
+		rename { "${it}_$projectName" }
+	}
+}
+
+publishing {
+	publications {
+		create("mavenJava", MavenPublication) {
+			from components.java
+		}
+	}
+
+	repositories {
+	}
+}

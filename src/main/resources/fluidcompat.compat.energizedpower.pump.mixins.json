@@ -1,0 +1,12 @@
+{
+	"required": false,
+	"package": "me.thanhtnt2.fluidcompat.compat.energizedpower.mixin.impl",
+	"compatibilityLevel": "JAVA_25",
+	"plugin": "me.thanhtnt2.fluidcompat.compat.energizedpower.mixin.EnergizedPowerPumpMixinPlugin",
+	"mixins": [
+		"FluidPumpMixin"
+	],
+	"injectors": {
+		"defaultRequire": 1
+	}
+}

@@ -1,0 +1,39 @@
+{
+	"schemaVersion": 1,
+	"id": "fluidcompat",
+	"version": "${version}",
+	"name": "Fluid Compat",
+	"description": "An unofficial intermediary compatibility mod that helps Flowing Fluids understand other mods better.",
+	"authors": [
+		"thanhtnt2"
+	],
+	"license": "MIT",
+	"icon": "assets/fluidcompat/icon.png",
+	"environment": "*",
+	"entrypoints": {
+		"main": [
+			"me.thanhtnt2.fluidcompat.FluidCompat"
+		],
+		"client": [
+			"me.thanhtnt2.fluidcompat.client.FluidCompatClient"
+		],
+		"modmenu": [
+			"me.thanhtnt2.fluidcompat.client.modmenu.FluidCompatModMenu"
+		]
+	},
+	"mixins": [
+		"fluidcompat.compat.energizedpower.pump.mixins.json",
+		"fluidcompat.compat.energizedpower.drain.mixins.json"
+	],
+	"depends": {
+		"fabricloader": ">=0.20.1",
+		"minecraft": "~26.3",
+		"java": ">=25",
+		"fabric-api": "*",
+		"flowing_fluids": ">=1.0.8"
+	},
+	"suggests": {
+		"yet_another_config_lib_v3": ">=3.9.0",
+		"modmenu": ">=21.0.0"
+	}
+}
