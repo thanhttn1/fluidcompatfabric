@@ -7,6 +7,8 @@ import me.thanhtnt2.fluidcompat.api.compat.CompatModuleRegistry;
 import me.thanhtnt2.fluidcompat.api.compat.CompatStatus;
 import me.thanhtnt2.fluidcompat.api.event.FluidIntakeEvents;
 import me.thanhtnt2.fluidcompat.compat.energizedpower.EnergizedPowerCompatModule;
+import me.thanhtnt2.fluidcompat.compat.flowingfluids.FlowingFluidsPipesCompatModule;
+import me.thanhtnt2.fluidcompat.compat.fluidloggable.FluidloggablePipesCompatModule;
 import me.thanhtnt2.fluidcompat.compat.info.InfoCompatModule;
 import me.thanhtnt2.fluidcompat.config.FluidCompatModulesConfig;
 import me.thanhtnt2.fluidcompat.logging.FluidCompatLog;
@@ -15,7 +17,7 @@ import net.fabricmc.loader.api.FabricLoader;
 
 public final class CompatBootstrap {
 
-    private static final List<String> MODS_TO_REPORT = List.of("fabric-api", "flowing_fluids", "energizedpower");
+    private static final List<String> MODS_TO_REPORT = List.of("fabric-api", "flowing_fluids", "energizedpower", "fluidloggable");
 
     private CompatBootstrap() {
     }
@@ -23,6 +25,8 @@ public final class CompatBootstrap {
     public static void registerBuiltInModules() {
         CompatModuleRegistry.register(new InfoCompatModule("flowing_fluids", "flowing_fluids", "Flowing Fluids (drain backend)"));
         CompatModuleRegistry.register(new EnergizedPowerCompatModule());
+        CompatModuleRegistry.register(new FlowingFluidsPipesCompatModule());
+        CompatModuleRegistry.register(new FluidloggablePipesCompatModule());
     }
 
     public static void initialize() {

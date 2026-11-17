@@ -11,6 +11,7 @@ import me.thanhtnt2.fluidcompat.config.BackendPreference;
 import me.thanhtnt2.fluidcompat.config.FluidCompatConfig;
 import me.thanhtnt2.fluidcompat.config.FluidCompatModulesConfig;
 import me.thanhtnt2.fluidcompat.config.Setting;
+import me.thanhtnt2.fluidcompat.config.WaterlogFlowOverride;
 import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.network.chat.Component;
 
@@ -53,6 +54,12 @@ public final class YaclConfigScreenFactory {
                 .option(toggle(FluidCompatModulesConfig.COMPAT_ENABLED))
                 .option(toggle(FluidCompatModulesConfig.ENERGIZED_POWER_ENABLED))
                 .option(toggle(FluidCompatModulesConfig.ENERGIZED_POWER_PLACE_COBBLESTONE))
+                .option(toggle(FluidCompatModulesConfig.FF_PIPES_ENABLED))
+                .option(toggle(FluidCompatModulesConfig.FF_PIPES_NON_DISPLACERS))
+                .option(waterlogModeOption())
+                .option(toggle(FluidCompatModulesConfig.FF_PIPES_ALLOW_EXPERIMENTAL_MODES))
+                .option(toggle(FluidCompatModulesConfig.FLUIDLOGGABLE_PIPES_ENABLED))
+                .option(toggle(FluidCompatModulesConfig.FLUIDLOGGABLE_ACCEPT_DUPLICATION_RISK))
                 .build();
     }
 
@@ -91,6 +98,16 @@ public final class YaclConfigScreenFactory {
                 .description(OptionDescription.of(description(setting)))
                 .binding(setting.defaultValue(), setting::get, setting::set)
                 .controller(option -> EnumControllerBuilder.create(option).enumClass(BackendPreference.class))
+                .build();
+    }
+
+    private static Option<WaterlogFlowOverride> waterlogModeOption() {
+        Setting<WaterlogFlowOverride> setting = FluidCompatModulesConfig.FF_PIPES_WATERLOG_MODE;
+        return Option.<WaterlogFlowOverride>createBuilder()
+                .name(name(setting))
+                .description(OptionDescription.of(description(setting)))
+                .binding(setting.defaultValue(), setting::get, setting::set)
+                .controller(option -> EnumControllerBuilder.create(option).enumClass(WaterlogFlowOverride.class))
                 .build();
     }
 

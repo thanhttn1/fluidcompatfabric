@@ -14,6 +14,7 @@ What it contains:
 | Mod | Tested against | What it does |
 |---|---|---|
 | Energized Power | 3.0.9 (26.3) | The Fluid Pump, Advanced Fluid Pump and Drain put exactly the water they took into their tank. Taking thin water used to be counted as a full bucket, the pumps still use up their cobblestone but no longer place the block |
+| Fluidloggable  |  3.1.3  | pipe blocks can hold fluid (off by default, needs acceptDuplicationRisk) |
 
 ## Requirements
 

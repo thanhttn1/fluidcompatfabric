@@ -8,11 +8,13 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.StandardCopyOption;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
+import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParseException;
@@ -32,6 +34,7 @@ public final class ConfigFile {
     private final Path path;
     private final List<Setting<?>> settings = new ArrayList<>();
     private JsonObject root = new JsonObject();
+    private boolean loaded;
 
     public ConfigFile(String fileName) {
         this.path = FabricLoader.getInstance().getConfigDir().resolve(fileName);
@@ -51,6 +54,14 @@ public final class ConfigFile {
                 JsonPrimitive::new));
     }
 
+    public Setting<List<String>> stringList(String section, String key, List<String> defaultValue) {
+        return add(new Setting<>(section, key, List.copyOf(defaultValue), ConfigFile::parseStringList, values -> {
+            JsonArray array = new JsonArray();
+            values.forEach(array::add);
+            return array;
+        }));
+    }
+
     public <E extends Enum<E>> Setting<E> enumeration(String section, String key, E defaultValue) {
         Class<E> type = defaultValue.getDeclaringClass();
         return add(new Setting<>(section, key, defaultValue,
@@ -59,7 +70,15 @@ public final class ConfigFile {
                 value -> new JsonPrimitive(value.name())));
     }
 
+    /** Loads the file once. Hooks that run before the mod initialiser use this instead of load(). */
+    public synchronized void ensureLoaded() {
+        if (!loaded) {
+            load();
+        }
+    }
+
     public synchronized void load() {
+        loaded = true;
         root = readRoot();
         boolean addedKeys = false;
         for (Setting<?> setting : settings) {
@@ -132,6 +151,23 @@ public final class ConfigFile {
         } catch (IOException exception) {
             FluidCompat.LOGGER.warn("{} could not be read and could not be moved aside", path.getFileName(), exception);
         }
+    }
+
+    private static Optional<List<String>> parseStringList(JsonElement element) {
+        if (element == null || !element.isJsonArray()) {
+            return Optional.empty();
+        }
+        List<String> values = new ArrayList<>();
+        for (JsonElement entry : element.getAsJsonArray()) {
+            if (!isPrimitive(entry) || !entry.getAsJsonPrimitive().isString()) {
+                return Optional.empty();
+            }
+            String text = entry.getAsString().trim();
+            if (!text.isEmpty()) {
+                values.add(text);
+            }
+        }
+        return Optional.of(Collections.unmodifiableList(values));
     }
 
     private static boolean isPrimitive(JsonElement element) {

@@ -2,6 +2,30 @@
 
 Versioning: `1.X.0` for a big update (new mod support), `1.X.Y` for a small update or fix.
 
+## 1.0.2
+
+* **Fluidloggable (3.1.3) pipes, built in and switchable.** Fluid Compat can make the pipe blocks of other mods
+  fluidloggable, so fluid can enter them like any other fluidloggable block.
+  * Pipes are found by Java class name, the same way as on the other lines: every block that is an instance of a class
+    in `fluidloggable_pipes.blockClasses` is covered. The default list has the Energized Power fluid pipe and the pipe
+    and cable classes of Modern Industrialization, Modern Dynamics, XNet, Refined Storage and Mekanism. Names of mods
+    that are not installed do nothing. Create blocks are always left out, Create has its own fluid settings.
+  * **Off by default.** Fluidloggable keeps its own copy of the fluid in every chunk section, next to the block state.
+    Fluidlogged did the same on the NeoForge line and duplicated water together with Flowing Fluids. Set
+    `fluidloggable_pipes.acceptDuplicationRisk` to true to turn it on (needs a restart, because block states are built
+    at startup). `fluidloggable_pipes.enabled` and `general.compatEnabled` switch it off completely.
+  * The hook has its own code check: Fluidloggable's block selection must still have the same shape, otherwise the pipes
+    stay as they are and the log says why.
+* **Submerged pipes for Flowing Fluids** (ported from the other lines, without the orphan water cleanup).
+  * Every pipe block from the list above is registered through the Flowing Fluids API as a block that never pushes fluid
+    out of its cell (`flowing_fluids_pipes.registerAsNonDisplacers`, default true).
+  * The Flowing Fluids waterlog flow mode is set to `IGNORE` in memory when a world starts, so waterlogged pipes neither
+    take nor give water. Nothing is written to the Flowing Fluids config file. This is a global Flowing Fluids setting,
+    so it also applies to slabs, stairs and other waterlogged blocks. `waterlogFlowMode` can be set to
+    `KEEP_FLOWING_FLUIDS_SETTING` to leave it alone; any other mode needs `allowExperimentalWaterlogModes`.
+* New settings screen entries for all of the above, and the config files gained two sections
+  (`fluidloggable_pipes`, `flowing_fluids_pipes`); existing keys are untouched.
+
 ## 1.0.1
 
 * **Mod Menu.** With Mod Menu and YetAnotherConfigLib installed, the Fluid Compat entry in the mod list now has a

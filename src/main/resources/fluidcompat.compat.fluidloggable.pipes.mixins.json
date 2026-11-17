@@ -1,0 +1,12 @@
+{
+	"required": false,
+	"package": "me.thanhtnt2.fluidcompat.compat.fluidloggable.mixin.impl",
+	"compatibilityLevel": "JAVA_25",
+	"plugin": "me.thanhtnt2.fluidcompat.compat.fluidloggable.mixin.FluidloggablePipesMixinPlugin",
+	"mixins": [
+		"ConfiguredFluidloggableBlockSupportMixin"
+	],
+	"injectors": {
+		"defaultRequire": 1
+	}
+}
